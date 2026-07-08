@@ -2,240 +2,335 @@
 <html>
 
 <head>
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  <title>Poultry360 Dashboard V3</title>
-  
-  <style>
-    body {
-      font-family: Arial;
-      background: #e8f5e9;
-      text-align: center;
-    }
-    
-    h1 {
-      background: #1b5e20;
-      color: white;
-      padding: 15px;
-    }
-    
-    .card {
-      background: white;
-      margin: 12px;
-      padding: 15px;
-      border-radius: 15px;
-      box-shadow: 0 0 8px #aaa;
-    }
-    
-    .value {
-      font-size: 28px;
-      font-weight: bold;
-    }
-    
-    button {
-      background: #2e7d32;
-      color: white;
-      border: 0;
-      padding: 12px 25px;
-      border-radius: 10px;
-      font-size: 16px;
-    }
-    
-    input,
-    select {
-      padding: 8px;
-      margin: 5px;
-      width: 100px;
-    }
-  </style>
-  
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Poultry360 Smart Control</title>
+
+
+<style>
+
+body{
+font-family:Arial;
+background:#e8f5e9;
+text-align:center;
+margin:0;
+}
+
+
+h1{
+background:#1b5e20;
+color:white;
+padding:15px;
+}
+
+
+.card{
+background:white;
+margin:12px;
+padding:15px;
+border-radius:15px;
+box-shadow:0 0 8px #aaa;
+}
+
+
+.value{
+font-size:28px;
+font-weight:bold;
+}
+
+
+button{
+
+background:#2e7d32;
+color:white;
+border:0;
+padding:12px 25px;
+border-radius:10px;
+
+}
+
+
+input,select{
+
+padding:8px;
+margin:5px;
+width:120px;
+
+}
+
+
+.hide{
+
+display:none;
+
+}
+
+</style>
+
 </head>
 
 
 <body>
-  
-  
-  <h1>🐔 Poultry360 Smart Control</h1>
-  
-  
-  <div class="card">
-    
-    🌡 Temperature
-    
-    <div class="value">
-      <span id="temp">--</span> °C
-    </div>
-    
-  </div>
-  
-  
-  
-  <div class="card">
-    
-    💧 Humidity
-    
-    <div class="value">
-      <span id="hum">--</span> %
-    </div>
-    
-  </div>
-  
-  
-  
-  <div class="card">
-    
-    System Status:
-    
-    <br>
-    
-    <span id="status">
-      Connecting...
-    </span>
-    
-  </div>
-  
-  
-  
-  <h2>Relay Control</h2>
-  
-  
-  <div class="card">
-    
-    🔥 Heater
-    
-    <br>
-    
-    <span id="heater">OFF</span>
-    
-    <br><br>
-    
-    <button onclick="relay('Heater')">
-      ON / OFF
-    </button>
-    
-  </div>
-  
-  
-  
-  <div class="card">
-    
-    💨 Fan
-    
-    <br>
-    
-    <span id="fan">OFF</span>
-    
-    <br><br>
-    
-    <button onclick="relay('Fan')">
-      ON / OFF
-    </button>
-    
-  </div>
-  
-  
-  
-  <div class="card">
-    
-    🌫 Fogger
-    
-    <br>
-    
-    <span id="fogger">OFF</span>
-    
-    <br><br>
-    
-    <button onclick="relay('Fogger')">
-      ON / OFF
-    </button>
-    
-  </div>
-  
-  
-  
-  <div class="card">
-    
-    💡 Light
-    
-    <br>
-    
-    <span id="light">OFF</span>
-    
-    <br><br>
-    
-    <button onclick="relay('Light')">
-      ON / OFF
-    </button>
-    
-  </div>
-  
-  
-  
-  <div class="card">
-    
-    ⚙ Motor
-    
-    <br>
-    
-    <span id="motor">OFF</span>
-    
-    <br><br>
-    
-    <button onclick="relay('Motor')">
-      ON / OFF
-    </button>
-    
-  </div>
-<h2>⚙ System Settings</h2>
 
 
-<div class="card">
+<h1>
+🐔 Poultry360 Smart Control
+</h1>
 
-Temperature Limit
+
+
+
+<!-- LOGIN -->
+
+
+<div class="card" id="loginBox">
+
+
+<h2>Device Login</h2>
+
+
+<input id="deviceID" placeholder="Device ID">
+
 
 <br>
 
-Min:
 
-<input id="tmin" type="number">
-
-<br>
-
-Max:
-
-<input id="tmax" type="number">
+<input id="password" type="password" placeholder="Password">
 
 
 <br><br>
 
 
-Humidity Limit
+<button onclick="login()">
 
-<br>
+Login
 
-Min:
-
-<input id="hmin" type="number">
+</button>
 
 
-<br>
-
-Max:
-
-<input id="hmax" type="number">
+<p id="loginMsg"></p>
 
 
 </div>
 
 
 
+
+
+
+
+<!-- DASHBOARD -->
+
+
+<div id="dashboard" class="hide">
+
+
+
+<div class="card">
+
+<h2>Live Monitoring</h2>
+
+
+🌡 Temperature
+
+<div class="value">
+
+<span id="temp">--</span> °C
+
+</div>
+
+
+
+<br>
+
+
+💧 Humidity
+
+<div class="value">
+
+<span id="hum">--</span> %
+
+</div>
+
+
+
+<p>
+
+Status:
+
+<span id="status">
+
+connecting...
+
+</span>
+
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+<h2>⚙ System Mode</h2>
+
+
+<div class="card">
+
+Mode:
+
+<span id="mode">
+
+--
+
+</span>
+
+
+</div>
+
+
+
+
+
+
+
+<h2>Relay Status</h2>
+
+
+
+<div class="card">
+
+🔥 Heater
+
+<br>
+
+<span id="heater">
+
+OFF
+
+</span>
+
+</div>
+
+
+
+
+<div class="card">
+
+💨 Fan
+
+<br>
+
+<span id="fan">
+
+OFF
+
+</span>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+🌫 Fogger
+
+<br>
+
+<span id="fogger">
+
+OFF
+
+</span>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+💡 Light
+
+<br>
+
+<span id="light">
+
+OFF
+
+</span>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+⚙ Motor
+
+<br>
+
+<span id="motor">
+
+OFF
+
+</span>
+
+</div>
+
+
+
+
+
+
+<h2>⚙ Settings</h2>
+
+
 <div class="card">
 
 
-Motor Interval
+Temp Min:
+
+<input id="tmin" type="number">
+
 
 <br>
+
+
+Temp Max:
+
+<input id="tmax" type="number">
+
+
+<br>
+
+
+Hum Min:
+
+<input id="hmin" type="number">
+
+
+<br>
+
+
+Hum Max:
+
+<input id="hmax" type="number">
+
+
+<br><br>
+
+
+Motor Interval:
 
 <input id="mintime" type="number">
 
@@ -243,7 +338,9 @@ Motor Interval
 <select id="minunit">
 
 <option>Second</option>
+
 <option>Minute</option>
+
 <option>Hour</option>
 
 </select>
@@ -253,9 +350,7 @@ Motor Interval
 <br><br>
 
 
-Motor Run Time
-
-<br>
+Motor Run:
 
 <input id="runtime" type="number">
 
@@ -263,9 +358,11 @@ Motor Run Time
 <select id="rununit">
 
 <option>Second</option>
+
 <option>Minute</option>
 
 </select>
+
 
 
 <br><br>
@@ -279,12 +376,7 @@ Save Settings
 
 
 </div>
-
-
-
-
 <script type="module">
-
 
 import {initializeApp}
 from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
@@ -304,8 +396,8 @@ from "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js";
 
 
 
-const firebaseConfig={
 
+const firebaseConfig={
 
 apiKey:"AIzaSyDGB8-3pF2GYbrJCONM_0R2H5xCCTJPAn4",
 
@@ -327,16 +419,24 @@ appId:"1:233201667115:web:1088923af65d6be8e5ae6e"
 
 const app=initializeApp(firebaseConfig);
 
-
 const db=getDatabase(app);
 
 
 
 
-// Sensor Live
+// Device ID (temporary)
+
+let device="SmartPoultry";
 
 
-onValue(ref(db,"SmartPoultry/Sensor"),(snap)=>{
+
+
+// Temperature Humidity
+
+
+onValue(
+ref(db,"SmartPoultry/Sensor"),
+(snap)=>{
 
 
 let d=snap.val();
@@ -346,11 +446,13 @@ if(d)
 
 {
 
+
 temp.innerHTML=d.Temperature;
 
 hum.innerHTML=d.Humidity;
 
 status.innerHTML="ONLINE";
+
 
 }
 
@@ -365,10 +467,13 @@ status.innerHTML="ONLINE";
 // Relay Status
 
 
-onValue(ref(db,"SmartPoultry/Relay"),(snap)=>{
+onValue(
+ref(db,"SmartPoultry/Relay"),
+(snap)=>{
 
 
 let r=snap.val();
+
 
 
 if(r)
@@ -397,29 +502,33 @@ motor.innerHTML=r.Motor?"ON":"OFF";
 
 
 
-// Relay Control
 
 
-window.relay=function(name)
+// Auto Mode
+
+
+onValue(
+ref(db,"SmartPoultry/Mode"),
+(snap)=>{
+
+
+let m=snap.val();
+
+
+
+if(m)
 
 {
 
 
-let p=ref(db,"SmartPoultry/Relay/"+name);
-
-
-
-onValue(p,(s)=>{
-
-
-set(p,!s.val());
-
-
-},{onlyOnce:true});
-
+mode.innerHTML=m.Auto?"AUTO MODE":"MANUAL MODE";
 
 
 }
+
+
+});
+
 
 
 
@@ -430,10 +539,13 @@ set(p,!s.val());
 // Load Settings
 
 
-onValue(ref(db,"SmartPoultry/Setting"),(snap)=>{
+onValue(
+ref(db,"SmartPoultry/Setting"),
+(snap)=>{
 
 
 let s=snap.val();
+
 
 
 if(s)
@@ -441,24 +553,26 @@ if(s)
 {
 
 
-tmin.value=s.Temp_Min;
+tmin.value=s.Temp_Min || "";
 
-tmax.value=s.Temp_Max;
-
-
-hmin.value=s.Hum_Min;
-
-hmax.value=s.Hum_Max;
+tmax.value=s.Temp_Max || "";
 
 
-mintime.value=s.Motor_Interval_Value;
+hmin.value=s.Hum_Min || "";
 
-minunit.value=s.Motor_Interval_Unit;
+hmax.value=s.Hum_Max || "";
 
 
-runtime.value=s.Motor_Run_Value;
 
-rununit.value=s.Motor_Run_Unit;
+mintime.value=s.Motor_Interval_Value || "";
+
+minunit.value=s.Motor_Interval_Unit || "Minute";
+
+
+
+runtime.value=s.Motor_Run_Value || "";
+
+rununit.value=s.Motor_Run_Unit || "Second";
 
 
 }
@@ -475,12 +589,15 @@ rununit.value=s.Motor_Run_Unit;
 // Save Settings
 
 
-window.saveSetting=function()
+window.saveSetting=function(){
+
+
+
+set(
+
+ref(db,"SmartPoultry/Setting"),
 
 {
-
-
-set(ref(db,"SmartPoultry/Setting"),{
 
 
 Temp_Min:Number(tmin.value),
@@ -493,9 +610,11 @@ Hum_Min:Number(hmin.value),
 Hum_Max:Number(hmax.value),
 
 
+
 Motor_Interval_Value:Number(mintime.value),
 
 Motor_Interval_Unit:minunit.value,
+
 
 
 Motor_Run_Value:Number(runtime.value),
@@ -503,8 +622,9 @@ Motor_Run_Value:Number(runtime.value),
 Motor_Run_Unit:rununit.value
 
 
+}
 
-});
+);
 
 
 
@@ -512,6 +632,96 @@ alert("Settings Saved");
 
 
 }
+// LOGIN SYSTEM
+
+
+window.login=function(){
+
+
+let id=document.getElementById("deviceID").value;
+
+let pass=document.getElementById("password").value;
+
+
+
+// ADMIN LOGIN
+
+
+if(id=="ADMIN" && pass=="786786"){
+
+
+loginBox.style.display="none";
+
+
+dashboard.style.display="block";
+
+
+device="SmartPoultry";
+
+
+return;
+
+
+}
+
+
+
+
+
+
+// CUSTOMER LOGIN
+
+
+onValue(
+
+ref(db,"Users/"+id),
+
+(snap)=>{
+
+
+let u=snap.val();
+
+
+
+if(u && u.Password==pass)
+
+{
+
+
+device=id;
+
+
+
+loginBox.style.display="none";
+
+
+dashboard.style.display="block";
+
+
+
+}
+
+else
+
+{
+
+
+loginMsg.innerHTML="Wrong Device ID or Password";
+
+
+}
+
+
+
+},{onlyOnce:true});
+
+
+
+}
+
+
+
+
 
 
 
@@ -519,5 +729,6 @@ alert("Settings Saved");
 
 
 </body>
+
 
 </html>
